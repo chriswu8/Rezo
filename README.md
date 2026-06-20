@@ -1,4 +1,4 @@
-# Rezo ▦ — system-resource dashboard for builders
+# Rezo
 
 A local, always-on dashboard that shows how your PC's computational resources are
 used **over time** (day → week → month → year), ranks the apps consuming them,
