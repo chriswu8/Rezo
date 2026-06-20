@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rezo — System Resource Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="vendor/chart.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">▦</span>
+      <div>
+        <h1>Rezo</h1>
+        <p class="tagline">System resources, day to year — built for builders</p>
+      </div>
+    </div>
+    <div class="sysinfo" id="sysinfo">
+      <div class="specline" id="specline">loading specs…</div>
+      <div class="statusline">
+        <span id="status-dot" class="dot"></span>
+        <span id="status-text">connecting…</span>
+        <span class="sep">•</span>
+        <span id="uptime">uptime —</span>
+        <span class="sep">•</span>
+        <span id="dataspan">history —</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- alerts: contention + suspicious processes (rendered above the gauges) -->
+  <section class="alerts-sec" id="alerts"></section>
+
+  <!-- live gauges -->
+  <section class="gauges" id="gauges"></section>
+
+  <!-- timeframe + charts -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Resource usage over time</h2>
+      <div class="rangetabs" id="rangetabs">
+        <button data-range="day" class="active">Day</button>
+        <button data-range="week">Week</button>
+        <button data-range="month">Month</button>
+        <button data-range="year">Year</button>
+      </div>
+    </div>
+    <div class="charts" id="charts">
+      <div class="chartcard"><h3>CPU <span id="cpu-now"></span></h3><canvas id="chart-cpu"></canvas></div>
+      <div class="chartcard"><h3>Memory <span id="ram-now"></span></h3><canvas id="chart-ram"></canvas></div>
+      <div class="chartcard"><h3>GPU <span id="gpu-now"></span></h3><canvas id="chart-gpu"></canvas></div>
+      <div class="chartcard"><h3>Network</h3><canvas id="chart-net"></canvas></div>
+      <div class="chartcard"><h3>Disk I/O</h3><canvas id="chart-disk"></canvas></div>
+    </div>
+  </section>
+
+  <!-- app rankings -->
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Applications by resource use <span class="muted" id="apps-range-label"></span></h2>
+      <div class="rangetabs" id="sorttabs">
+        <button data-sort="avg_cpu" class="active">By CPU</button>
+        <button data-sort="avg_ram">By RAM</button>
+      </div>
+    </div>
+    <p class="hint">CPU shown is the average <em>while the app was running</em> (not diluted by idle time). 🟢 = first seen in the last 7 days.</p>
+    <div class="table-wrap">
+      <table id="apps-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Application</th>
+            <th class="num">Avg CPU</th><th class="num">Peak CPU</th>
+            <th class="num">Avg RAM</th><th class="num">Peak RAM</th>
+            <th class="num">Instances</th><th>First seen</th>
+          </tr>
+        </thead>
+        <tbody id="apps-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- recommendations -->
+  <section class="panel">
+    <div class="panel-head"><h2>Upgrade guidance</h2></div>
+    <p class="reco-summary" id="reco-summary">analyzing…</p>
+    <div class="health" id="health"></div>
+    <h3 class="reco-h">Recommended now</h3>
+    <div class="reco-cards" id="reco-now"></div>
+    <h3 class="reco-h">Planning ahead — what your next builds may need</h3>
+    <div class="reco-cards" id="reco-planning"></div>
+  </section>
+
+  <footer>
+    <span>Rezo · local-only · data stored in %LOCALAPPDATA%\Rezo</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
